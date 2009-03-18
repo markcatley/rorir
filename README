@@ -1,0 +1,64 @@
+RoRIR
+=====
+
+RoRIR creates images from text, with the aim of getting around the difference in the font rendering implementation used by different browsers across.
+It generates images using the rMagick gem.
+
+Styling
+=======
+
+RoRIR allows the following styling options:
+
+font:
+The name of the font to use.
+The default is Vera.ttf.
+RoRIR will first look in the RAILS_APP/fonts folder for the requested font. Then it will try and find it in the Vera font family. If all else fails it will allow ImageMagick to find the font.
+For best results package the fonts you want to use in the RAILS_APP/fonts folder.
+
+size:
+The point size for the font you wish to use
+The default is 40.
+
+colour:
+The colour you wish to render the text as.
+The default is black.
+You should use the rgb value of the colour you want. I.e. FFFFFF for black, etc.
+
+background_colour:
+The colour you wish the background of the image to be.
+The default is transparent.
+Specify this as with colour.
+
+These options can either be specified as get parameters.
+Eg.
+/rorir/text to render?size=50
+or
+rorir_with_options_path(:text => 'text to render', :size => 50)
+
+Or you can specify a style macro in a config/rorir_styles.yml and call the styles by macro.
+I.e.
+/rorir/macro_name/text to render
+or
+rorir_path(:text => 'text to render', :style => 'macro_name')
+
+The format of rorir_styles.yml is
+
+macro_name:
+  font: whatever.ttf
+  size: 30
+  colour: "#456789"
+  background_colour: "#987654"
+
+If you do not supply an option the defaults are used.
+
+Caching
+=======
+
+Page caching these images is probably a good idea, however since urls with GET parameters are not cacheable if you wish to cache the images you must use the style macro method of rendering the image. This is enabled if you have caching turned on.
+
+Default Font
+============
+The default fonts that are packaged with RoRIR are the Bitstream Vera version 1.10 font family, available from http://www.gnome.org/fonts/. Please see fonts/COPYRIGHT.txt for their copyright information.
+
+
+Copyright (c) 2009 Nexx New Zealand Limited, released under the MIT license
