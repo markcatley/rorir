@@ -42,7 +42,7 @@ class RorirController < ActionController::Base
       background_colour = options[:background_colour]
       
       canvas = Magick::Image.new(*(
-        [:width, :height].map { |element| text.get_type_metrics(display_text).send(element) }
+        [:width, :height].map { |element| text.get_type_metrics(display_text).send(element) + padding }
       )) { self.background_color = background_colour }
       
       canvas.format           = 'PNG'
@@ -50,6 +50,10 @@ class RorirController < ActionController::Base
       text.annotate(canvas, 0, 0, 0, 0, display_text)
       
       canvas
+    end
+    
+    def padding
+      4 #px
     end
     
     def display_text
