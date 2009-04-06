@@ -57,7 +57,7 @@ class RorirController < ActionController::Base
     end
     
     def display_text
-      params[:text].to_s
+      Rack::Utils.unescape(params[:text]).gsub(/[`]/, '.')
     end
     
     def rorir_options_from_params
