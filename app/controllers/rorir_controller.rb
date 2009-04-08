@@ -18,7 +18,8 @@ class RorirController < ActionController::Base
         :size              => 40,
         :colour            => '#FFFFFF',
         :background_colour => 'none',
-        :gravity           => Magick::CenterGravity
+        :gravity           => Magick::CenterGravity,
+        :kerning           => -1
       }
     end
     
@@ -28,6 +29,7 @@ class RorirController < ActionController::Base
       text.pointsize = options[:size]
       text.fill      = options[:colour]
       text.gravity   = options[:gravity]
+      text.kerning   = options[:kerning]
       
       background_colour = options[:background_colour]
       
