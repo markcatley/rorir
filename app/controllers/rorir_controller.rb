@@ -1,18 +1,8 @@
 class RorirController < ActionController::Base
-  caches_page :show_with_style
+  caches_page :show
   
-  def show_with_style
+  def show
     options.merge!(defaults_from_style(params[:style]))
-    
-    respond_to do |format|
-      format.png do
-        send_data canvas.to_blob, :disposition => 'inline', :type => 'image/png'
-      end
-    end
-  end
-  
-  def show_without_style
-    options.merge!(rorir_options_from_params) unless rorir_options_from_params.blank?
     
     respond_to do |format|
       format.png do
@@ -58,15 +48,6 @@ class RorirController < ActionController::Base
     
     def display_text
       Rack::Utils.unescape(params[:text]).gsub(/[`]/, '.')
-    end
-    
-    def rorir_options_from_params
-      @rorir_options_from_params ||= {
-        :font              =>     params[:font],
-        :size              =>     params[:size].blank? ? nil :     params[:size].to_i,
-        :colour            =>   params[:colour].blank? ? nil : "##{params[:colour]}",
-        :background_colour => params[:bgcolour].blank? ? nil : "##{params[:bgcolour]}"
-      }.reject { |key, value| value.blank? }
     end
     
     def defaults_from_style(style)
